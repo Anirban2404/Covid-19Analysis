@@ -2,3 +2,4 @@
 venv/
 Pipfile/
 .idea/
+.DS_Store/
