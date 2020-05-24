@@ -1,5 +1,5 @@
-.ipynb_checkpoints/
-venv/
-Pipfile/
-.idea/
-.DS_Store/
+.ipynb_checkpoints
+venv
+Pipfile
+.idea
+.DS_Store
