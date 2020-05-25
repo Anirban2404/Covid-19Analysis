@@ -4,3 +4,4 @@ Pipfile
 .idea
 .DS_Store
 .__pychache__
+src/py_src/__pycache__/

@@ -2,36 +2,37 @@
 # coding: utf-8
 
 
+import DirFileOperations
 import pandas as pd
-import CreateorReplaceDir, DownloadFiles, SavetoCSV
+
 
 def transformFiles(currDir):
-# Datasets loaded to DataFrame
+    # Datasets loaded to DataFrame
     df_confirmed = pd.read_csv(currDir + "/time_series_covid19_confirmed_US.csv")
     df_deaths = pd.read_csv(currDir + "/time_series_covid19_deaths_US.csv")
     # print(df_confirmed.columns)
-    
+
     ids = df_confirmed.columns[0:11]
     us_dates = df_confirmed.columns[11:]
 
-    us_conf_df_long = df_confirmed.melt(id_vars=ids, value_vars=us_dates, 
+    us_conf_df_long = df_confirmed.melt(id_vars=ids, value_vars=us_dates,
                                         var_name='Date', value_name='Confirmed')
-    us_deaths_df_long = df_deaths.melt(id_vars=ids, value_vars=us_dates, 
+    us_deaths_df_long = df_deaths.melt(id_vars=ids, value_vars=us_dates,
                                        var_name='Date', value_name='Deaths')
 
     # print(us_conf_df_long.shape)
     # print(us_deaths_df_long.shape)
 
-    #ft_ids = us_conf_df_long.columns[:-1]
+    # ft_ids = us_conf_df_long.columns[:-1]
     us_full_table = pd.concat([us_conf_df_long, us_deaths_df_long[['Deaths']]], axis=1)
     del us_full_table['Combined_Key']
     us_full_table['Date'] = pd.to_datetime(us_full_table.Date)
     us_full_table.loc[us_full_table['Country_Region'] == "US", "Country_Region"] = "USA"
-    
+
     us_full_table['Confirmed'] = us_full_table['Confirmed'].astype(int)
     us_full_table['Deaths'] = us_full_table['Deaths'].astype(int)
     print(us_full_table.shape)
-    
+
     return us_full_table
 
 
@@ -39,7 +40,6 @@ def transformFiles(currDir):
 def saveFiletoCSV(usa_full_table, currDir):
     usa_full_table.to_csv(currDir + '/covid_19_usa_county_wise.csv', index=False)
     print("File Saved at %s" % currDir)
-
 
 
 def main():
@@ -52,23 +52,15 @@ def main():
 
     fileName = 'covid_19_usa_county_wise.csv'
 
-    CreateorReplaceDir.create_Dir(currDir)
-    DownloadFiles.download_Files(urls, currDir)
+    dpo = DirFileOperations.Dir_File_Operations()
+    dpo.create_Dir(currDir)
+    dpo.download_Files(urls, currDir)
     usa_full_table = transformFiles(currDir)
-    SavetoCSV.saveFiletoCSV(usa_full_table, currDir, fileName)
+    dpo.saveFiletoCSV(usa_full_table, currDir, fileName)
 
 
 if __name__ == "__main__":
     main()
 
-
-
-
 # usa_full_table[(usa_full_table['Province_State'] == "Maryland" )
-#                   & (usa_full_table['Admin2'] == "Montgomery")] 
-
-
-
-
-
-
+#                   & (usa_full_table['Admin2'] == "Montgomery")]

@@ -9,10 +9,10 @@ https://github.com/CSSEGISandData/COVID-19.git
 !python3 -m pip install pycountry_convert
 """
 
+import DirFileOperations
 import numpy as np
 import pandas as pd
 import pycountry_convert as pc
-import CreateorReplaceDir, DownloadFiles, SavetoCSV
 
 
 # Defininng Function for getting continent code for country.
@@ -71,7 +71,7 @@ def transformFiles(currDir):
     full_table.loc[
         full_table['Country/Region'] == "Cote d'Ivoire", "Country/Region"] = "Côte d'Ivoire"
     full_table.loc[full_table['Country/Region'] == "Reunion", "Country/Region"] = "Réunion"
-    print("Full table Shape: ", full_table.shape)
+    # print("Full table Shape: ", full_table.shape)
 
     # Replace Null
     full_table['Recovered'] = full_table['Recovered'].fillna(0)
@@ -117,6 +117,7 @@ def transformFiles(currDir):
     full_table = full_table.replace(np.nan, '', regex=True)
     full_table['Date'] = pd.to_datetime(full_table.Date)
     # print(full_table.head())
+    print("Full table Shape: ", full_table.shape)
 
     return full_table
 
@@ -138,10 +139,11 @@ def main():
 
     fileName = 'covid_19_global_complete.csv'
 
-    CreateorReplaceDir.create_Dir(currDir)
-    DownloadFiles.download_Files(urls, currDir)
+    dpo = DirFileOperations.Dir_File_Operations()
+    dpo.create_Dir(currDir)
+    dpo.download_Files(urls, currDir)
     global_table = transformFiles(currDir)
-    SavetoCSV.saveFiletoCSV(global_table, currDir, fileName)
+    dpo.saveFiletoCSV(global_table, currDir, fileName)
 
 
 if __name__ == "__main__":
