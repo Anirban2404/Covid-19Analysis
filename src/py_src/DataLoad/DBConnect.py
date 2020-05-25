@@ -28,7 +28,7 @@ Allow local infile loading must be TRUE to load csv files.
 '''
 
 
-class DBConnect:
+class _DBConnect:
     def __init__(self, host):
         self.host = host
 
