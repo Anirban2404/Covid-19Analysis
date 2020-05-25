@@ -135,7 +135,7 @@ def main():
         'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv',
         'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv']
 
-    currDir = "../../DataStore/COVID-19-global"
+    currDir = "../../../DataStore/COVID-19-global"
 
     fileName = 'covid_19_global_complete.csv'
 

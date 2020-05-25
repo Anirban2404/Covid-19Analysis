@@ -43,7 +43,7 @@ def saveFiletoCSV(usa_full_table, currDir):
 
 
 def main():
-    currDir = "../../DataStore/COVID-19-data-US"
+    currDir = "../../../DataStore/COVID-19-data-US"
 
     # urls of the files
     urls = [

@@ -61,7 +61,7 @@ def main():
 
     download_urls = scrape_data(search_url, download_url)
 
-    currDir = "../../DataStore/COVID-19-data-state-USA"
+    currDir = "../../../DataStore/COVID-19-data-state-USA"
     fileName = "covid_19_us_states_complete.csv"
 
     dpo = DirFileOperations.Dir_File_Operations()
