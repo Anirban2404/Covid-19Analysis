@@ -1,42 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
 
 import pandas as pd
-import numpy as np
-
-import wget
-import os, datetime
-import shutil
-
-import pycountry_convert as pc
-
-
-# In[2]:
-
-
-# create dir
-def createDir(currDir):
-    isdir = os.path.isdir(currDir) 
-
-    if isdir:
-        try:
-            shutil.rmtree(currDir, ignore_errors=True)
-        except OSError:
-            print ("Deletition of the directory %s failed" % currDir)
-
-    try:
-        os.mkdir(currDir)
-    except OSError:
-        print ("Creation of the directory %s failed" % currDir)
-    else:
-        print ("Successfully created the directory %s " % currDir)
-
-
-# In[8]:
-
+import CreateorReplaceDir, DownloadFiles, SavetoCSV
 
 def transformFiles(currDir):
 # Datasets loaded to DataFrame
@@ -68,48 +35,39 @@ def transformFiles(currDir):
     return us_full_table
 
 
-# In[4]:
-
-
-# download files
-def downloadFiles(urls, currDir):
-    for url in urls:
-        wget.download(url, currDir)
-    print ("Successfully downloaded files")
-
-
-# In[5]:
-
-
 # Save to csv file
 def saveFiletoCSV(usa_full_table, currDir):
     usa_full_table.to_csv(currDir + '/covid_19_usa_county_wise.csv', index=False)
     print("File Saved at %s" % currDir)
 
 
-# In[9]:
 
+def main():
+    currDir = "../../DataStore/COVID-19-data-US"
 
-currDir = "../../DataStore/COVID-19-data-US"
-
-# urls of the files
-urls = ['https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv', 
+    # urls of the files
+    urls = [
+        'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_US.csv',
         'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_US.csv']
 
-createDir(currDir)
-downloadFiles(urls, currDir)
-usa_full_table = transformFiles(currDir)
-saveFiletoCSV(usa_full_table, currDir)
+    fileName = 'covid_19_usa_county_wise.csv'
+
+    CreateorReplaceDir.create_Dir(currDir)
+    DownloadFiles.download_Files(urls, currDir)
+    usa_full_table = transformFiles(currDir)
+    SavetoCSV.saveFiletoCSV(usa_full_table, currDir, fileName)
 
 
-# In[7]:
+if __name__ == "__main__":
+    main()
+
+
 
 
 # usa_full_table[(usa_full_table['Province_State'] == "Maryland" )
 #                   & (usa_full_table['Admin2'] == "Montgomery")] 
 
 
-# In[ ]:
 
 
 
