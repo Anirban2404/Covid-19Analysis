@@ -39,6 +39,7 @@ class _DBConnect:
             passwd="P@ssw0rd",
             auth_plugin='mysql_native_password',
             database="covid_data",
-            allow_local_infile=True
+            allow_local_infile=True,
+            autocommit=True
         )
         return _mySqlDB

@@ -67,6 +67,20 @@ def loadTable(loadCSVsql):
     cursor.close()
 
 
+def countTable(tableName):
+    # Connect to covid_data database
+    covid_db = DBConnect._DBConnect(host="localhost")
+
+    mySqlConnect = covid_db._mySqlConnect()
+    cursor = mySqlConnect.cursor()
+    countQuery = "select * from " + tableName + ";"
+    print(countQuery)
+    cursor.execute(countQuery)
+    rows = cursor.fetchall()
+    print('Total Row(s):', cursor.rowcount)
+    cursor.close()
+
+
 def main():
     # Create Table
     tableName = "covid_USA_State"
@@ -98,10 +112,10 @@ def main():
         UID,\
         ISO3,\
         Testing_Rate,\
-        Hospitalization_Rate);\
-        commit;"
+        Hospitalization_Rate);"
 
     loadTable(loadCSVsql)
+    countTable(tableName)
 
 
 if __name__ == "__main__":

@@ -10,8 +10,11 @@ cd "${BASEDIR}"
 echo "Script executed from: ${PWD}"
 
 time ./DBLoad_Global.py
+echo ">>> Global csv file loaded."
 time ./DBLoad_USA.py
-time ./DDBLoad_USA_State.py
+echo ">>> USA csv file loaded."
+time ./DBLoad_USA_State.py
+echo ">>> USA state csv file loaded."
 
 cd "${CURRDIR}"
 echo "Current location: ${PWD}"

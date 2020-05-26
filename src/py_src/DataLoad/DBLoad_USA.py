@@ -47,7 +47,7 @@ def createTable(tableName):
     cursor.close()
 
 
-def loadTable(loadCSVsql):
+def loadTable(loadCSVsql, tableName):
     # Connect to covid_data database
     covid_db = DBConnect._DBConnect(host="localhost")
 
@@ -59,6 +59,20 @@ def loadTable(loadCSVsql):
         print("Successfully loaded the table")
     except Exception:
         print("Load Table failed", Exception)
+    cursor.close()
+
+
+def countTable(tableName):
+    # Connect to covid_data database
+    covid_db = DBConnect._DBConnect(host="localhost")
+
+    mySqlConnect = covid_db._mySqlConnect()
+    cursor = mySqlConnect.cursor()
+    countQuery = "select * from " + tableName + ";"
+
+    cursor.execute(countQuery)
+    rows = cursor.fetchall()
+    print('Total Row(s):', cursor.rowcount)
     cursor.close()
 
 
@@ -88,10 +102,10 @@ def main():
         Long_,\
         Update_Date,\
         Confirmed,\
-        Deaths); \
-        commit;"
+        Deaths); "
 
-    loadTable(loadCSVsql)
+    loadTable(loadCSVsql, tableName)
+    countTable(tableName)
 
 
 if __name__ == "__main__":
