@@ -10,9 +10,10 @@ cd "${BASEDIR}"
 echo "Script executed from: ${PWD}"
 
 time ./src/py_src/DataPreperation/DataPrepare.sh
-echo ">>> CSV Creation Completed"
+echo ">>> CSV Creation Completed."
 time ./src/py_src/DataLoad/DataLoad.sh
-echo ">>> Data Load Completed"
+echo ">>> Data Load Completed."
 
 cd "${CURRDIR}"
 echo "Current location: ${PWD}"
+echo ">>> Data Preperation and Load completed."
