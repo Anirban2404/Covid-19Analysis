@@ -11,6 +11,8 @@ echo "Script executed from: ${PWD}"
 
 time ./src/py_src/DataPreperation/DataPrepare.sh
 echo ">>> CSV Creation Completed."
+
+mysql -u covidAnalyst -p -e 'SET GLOBAL local_infile=1;'
 time ./src/py_src/DataLoad/DataLoad.sh
 echo ">>> Data Load Completed."
 
