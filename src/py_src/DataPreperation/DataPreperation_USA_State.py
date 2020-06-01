@@ -40,7 +40,11 @@ def transformFiles(currDir):
 
     dfs = []
     for filename in filenames:
-        dfs.append(pd.read_csv(filename))
+        tmp = pd.read_csv(filename)
+        # Changed the Last_Update date according to filename
+        tmp['Last_Update'] = filename[43:53]
+        tmp['Last_Update'] = pd.to_datetime(tmp.Last_Update)
+        dfs.append(tmp)
 
     # Concatenate all data into one DataFrame
     us_state_table = pd.concat(dfs, ignore_index=True)
@@ -50,6 +54,7 @@ def transformFiles(currDir):
     us_state_table = us_state_table[
         us_state_table['Province_State'].str.contains('Recovered') != True]
     print(us_state_table.shape)
+    us_state_table = us_state_table.sort_values(by='Last_Update')
 
     return us_state_table
 
