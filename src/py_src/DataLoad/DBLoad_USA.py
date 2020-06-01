@@ -18,7 +18,7 @@ def createTable(tableName):
         iso2 VARCHAR(2) NOT NULL,\
         iso3 VARCHAR(3) NOT NULL,\
         code3 INT NOT NULL,\
-        FIPS FLOAT NOT NULL,\
+        FIPS INT NOT NULL,\
         Admin2 VARCHAR(25),\
         Province_State VARCHAR(50) NOT NULL,\
         Country_Region VARCHAR(25) NOT NULL,\
