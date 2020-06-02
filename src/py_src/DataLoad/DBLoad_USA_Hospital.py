@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 # coding: utf-8
+# !python3 -m pip install mysql-connector-python-rf
+# !python3 -m pip install mysql-connector-python
 
-'''
-!python3 -m pip install mysql-connector-python-rf
-!python3 -m pip install mysql-connector-python
-'''
 
 import os
 
@@ -14,19 +12,16 @@ import DBConnect
 def createTable(tableName):
     dropTable = "DROP TABLE " + tableName + ";"
     createTable = "CREATE TABLE " + tableName + "(\
-        UID INT NOT NULL,\
-        iso2 VARCHAR(2) NOT NULL,\
-        iso3 VARCHAR(3) NOT NULL,\
-        code3 INT NOT NULL,\
-        FIPS INT NOT NULL,\
-        Admin2 VARCHAR(25),\
-        Province_State VARCHAR(50) NOT NULL,\
-        Country_Region VARCHAR(25) NOT NULL,\
-        Lat_ FLOAT NOT NULL,\
         Long_ FLOAT NOT NULL,\
-        Update_Date DATE NOT NULL,\
-        Confirmed INT NOT NULL,\
-        Deaths INT NOT NULL\
+        Lat_ FLOAT NOT NULL,\
+        FID INT NOT NULL,\
+        HOSPITAL_NAME VARCHAR(100) NOT NULL,\
+        COUNTY_NAME VARCHAR(25) NOT NULL,\
+        STATE_NAME VARCHAR(25) NOT NULL,\
+        FIPS INT NOT NULL,\
+        NUM_LICENSED_BEDS INT NOT NULL,\
+        NUM_STAFFED_BEDS INT NOT NULL,\
+        NUM_ICU_BEDS INT NOT NULL\
     );"
 
     # Connect to covid_data database
@@ -38,12 +33,12 @@ def createTable(tableName):
     try:
         cursor.execute(dropTable)
     except:
-        print("Drop Table %s failed" % tableName)
+        print("Drop Table failed")
         cursor.execute(createTable)
-        print("Successfully created the table %s" % tableName)
+        print("Successfully created the table")
     else:
         cursor.execute(createTable)
-        print("Successfully created the table %s" % tableName)
+        print("Successfully created the table")
     cursor.close()
 
 
@@ -78,31 +73,28 @@ def countTable(tableName):
 
 def main():
     # Create Table
-    tableName = "covid_USA"
+    tableName = "hospital_USA"
     createTable(tableName)
 
     # Load Table
     CSVPath = os.getcwd() + '/../../../DataStore/'
-    dirName = 'COVID-19-data-US/'
-    fileName = 'covid_19_usa_county_wise.csv'
+    dirName = 'Hospital-data-US/'
+    fileName = 'hospital_usa_county_wise.csv'
     loadCSV = CSVPath + dirName + fileName
 
     loadCSVsql = "LOAD DATA LOCAL INFILE '" + loadCSV + "'\
-        INTO TABLE covid_USA\
+        INTO TABLE hospital_USA\
         FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n' IGNORE 1 ROWS (\
-        UID,\
-        iso2,\
-        iso3,\
-        code3,\
-        FIPS,\
-        Admin2,\
-        Province_State,\
-        Country_Region,\
-        Lat_,\
         Long_,\
-        Update_Date,\
-        Confirmed,\
-        Deaths); "
+        Lat_,\
+        FID,\
+        HOSPITAL_NAME,\
+        COUNTY_NAME,\
+        STATE_NAME,\
+        FIPS,\
+        NUM_LICENSED_BEDS,\
+        NUM_STAFFED_BEDS,\
+        NUM_ICU_BEDS); "
 
     loadTable(loadCSVsql)
     countTable(tableName)
