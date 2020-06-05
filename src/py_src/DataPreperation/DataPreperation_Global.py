@@ -71,6 +71,7 @@ def transformFiles(currDir):
     full_table.loc[
         full_table['Country/Region'] == "Cote d'Ivoire", "Country/Region"] = "Côte d'Ivoire"
     full_table.loc[full_table['Country/Region'] == "Reunion", "Country/Region"] = "Réunion"
+    full_table.loc[full_table['Country/Region'] == "Burma", "Country/Region"] = "Myanmar"
     # print("Full table Shape: ", full_table.shape)
 
     # Replace Null
