@@ -17,6 +17,9 @@ def transformFiles(currDir):
     df_population = df_population.loc[:, ['STNAME', 'CTYNAME', 'POPESTIMATE2019', 'FIPS']]
     df_population = df_population.rename(columns={'STNAME': "State", "CTYNAME": "County",
                                                   "POPESTIMATE2019": "Population2019"})
+
+    df_population['County'] = df_population['County'].apply(lambda x:
+                                                            x.replace('County', '').strip())
     print(df_population.shape)
     return df_population
 
