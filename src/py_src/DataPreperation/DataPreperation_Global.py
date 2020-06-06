@@ -118,7 +118,7 @@ def transformFiles(currDir):
     full_table = full_table.replace(np.nan, '', regex=True)
     full_table['Date'] = pd.to_datetime(full_table.Date)
     # print(full_table.head())
-    print("Full table Shape: ", full_table.shape)
+    print(full_table.shape)
 
     return full_table
 
