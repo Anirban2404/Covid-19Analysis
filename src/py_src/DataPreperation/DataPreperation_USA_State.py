@@ -21,16 +21,15 @@ from bs4 import BeautifulSoup
 def scrape_data(search_url, download_url):
     response = requests.get(search_url, timeout=10)
     soup = BeautifulSoup(response.content, 'html.parser')
+    # print(soup.prettify())
 
-    table = soup.find_all('table')
-    rows = table[0].select('tbody > tr > td > span ')
-
-    header = [th.text.rstrip() for th in rows[0].find_all('th')]
+    table = soup.find_all('span')
+    header = [th.text.rstrip() for th in soup.find_all('span')]
     download_urls = []
-    for row in rows:
-        for th in row.find_all('a', href=True):
-            if 'csv' in th['title'] and len(th['title']) < 15:
-                download_urls.append(download_url + th['title'].rstrip())
+    for row in header:
+        if 'csv' in row and len(row) < 15:
+            download_urls.append(download_url + row.rstrip())
+
     return download_urls
 
 
