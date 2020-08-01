@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding: utf-8
 # !python3 -m pip install mysql-connector-python-rf
 # !python3 -m pip install mysql-connector-python
